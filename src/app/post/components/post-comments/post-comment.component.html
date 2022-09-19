@@ -1,0 +1,36 @@
+<div class="card">
+  <div class="card-block">
+    <p class="card-text">
+      {{ comment.comment }}
+    </p>
+  </div>
+  <div class="card-footer">
+    <a class="comment-author">
+      {{ comment.createdBy }}
+    </a>
+    <span class="date-posted">
+      {{ comment.createdAt | date: 'longDate' }}
+    </span>
+    <span class="mod-options" [hidden]="!canModify">
+      <i class="ion-trash-a" (click)="deleteClicked()"></i>
+      <i class="ion-edit" (click)="editComment()"></i>
+    </span>
+  </div>
+  <!-- update comment handle in post list -->
+  <form class="card comment-form" (ngSubmit)="updateComment()" [hidden]="!isEdit">
+    <fieldset>
+      <div class="card-block">
+        <textarea class="form-control" placeholder="Write a comment..." rows="3"
+          [formControl]="commentControl"></textarea>
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-sm btn-primary" type="submit">
+          Update Comment
+        </button>&nbsp;
+        <button class="btn btn-sm btn-primary" (click)="editComment()">
+          Cancel
+        </button>
+      </div>
+    </fieldset>
+  </form>
+</div>

@@ -1,0 +1,18 @@
+<div class="app-post-preview" [hidden]="!loading">
+  Loading posts...
+</div>
+
+<div class="app-post-preview" [hidden]="loading || postList.length">
+  No post are here...
+</div>
+
+<div>
+  <div class="post-list" *ngFor="let post of postList">
+    <a [routerLink]="['/post', post.id]" class="preview-link">
+      <h1>{{ post.title }}</h1>
+      <p [innerHTML]="editBody(post.body)"></p>
+      <span>Read more...</span>
+    </a>
+  </div>
+
+</div>

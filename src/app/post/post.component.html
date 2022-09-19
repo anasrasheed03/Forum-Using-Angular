@@ -1,0 +1,67 @@
+<div class="post-page">
+  <div class="banner">
+    <div class="container">
+      <h1>{{ post.title }}</h1>
+      <app-post-details [post]="post">
+        <span [hidden]="!canModify">
+          <a class="btn btn-sm btn-outline-secondary" [routerLink]="['/newpost', post.id]">
+            <i class="ion-edit"></i> Edit Post
+          </a>
+          <button class="btn btn-sm btn-outline-danger" [ngClass]="{disabled: isDeleting}" (click)="deletePost()">
+            <i class="ion-trash-a"></i> Delete Post
+          </button>
+        </span>
+        <span [hidden]="canModify">
+          <app-like-button [post]="post" (toggle)="onLikeToggle($event)">
+            {{ post.liked ? 'Unlike' : 'Like' }} Post <span class="counter">({{ post.totalLike }})</span>
+          </app-like-button>
+        </span>
+
+      </app-post-details>
+    </div>
+  </div>
+
+  <div class="container page">
+    <div class="row post-content">
+      <div class="col-md-12">
+
+        <div [innerHTML]="post.body"></div>
+        <hr />
+        <h3 *ngIf="likes.length > 0">Likes by</h3>
+        <ul class="tag-list">
+          <li *ngFor="let like of likes" class="btn btn-outline-info">
+            {{ like.createdBy }}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <hr *ngIf="likes.length > 0" />
+    <div class="row">
+      <div class="col-xs-12 col-md-8 offset-md-2">
+        <div *appShowAuthed="true">
+          <app-list-errors [errors]="commentFormErrors"></app-list-errors>
+          <form class="card comment-form" (ngSubmit)="addComment()">
+            <fieldset [disabled]="isSubmitting">
+              <div class="card-block">
+                <textarea class="form-control" placeholder="Write a comment..." rows="3"
+                  [formControl]="commentControl"></textarea>
+              </div>
+              <div class="card-footer">
+                <button class="btn btn-sm btn-primary" type="submit">
+                  Post Comment
+                </button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+        <div *appShowAuthed="false">
+          <a [routerLink]="['/login']">Sign in</a> or <a [routerLink]="['/register']">sign up</a> to add comments on
+          this post.
+        </div>
+        <app-post-comment *ngFor="let comment of comments" [comment]="comment"
+          (deleteComment)="onDeleteComment(comment)" (updateCommentValue)="onEditComment($event)">
+        </app-post-comment>
+      </div>
+    </div>
+  </div>
+</div>

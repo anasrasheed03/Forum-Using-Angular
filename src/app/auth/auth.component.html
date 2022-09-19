@@ -1,0 +1,40 @@
+<div class="auth-page">
+  <div class="container page">
+    <div class="row">
+
+      <div class="col-md-6 offset-md-3 col-xs-12">
+        <img style="margin: 0% 18%;" src="../../assets//img/logo.png">
+        <h1 class="text-xs-center">{{ pageTitle }}</h1>
+        <p class="text-xs-center">
+         <span *ngIf="pageType == 'register'"> Don't Have An Account Yet?<a [routerLink]="['/login']">Sign Up</a></span>
+         <span *ngIf="pageType == 'login'">Already Have An Account? <a [routerLink]="['/register']">Sign In</a></span> 
+        </p>
+        <app-list-errors [errors]="errors"></app-list-errors>
+        <form [formGroup]="authForm" (ngSubmit)="submitForm()">
+          <fieldset [disabled]="isSubmitting">
+            <fieldset class="form-group">
+              <input formControlName="username" placeholder="Enter Username" class="form-control form-control-lg"
+                type="text" *ngIf="pageType == 'register'" />
+            </fieldset>
+            <fieldset class="form-group">
+              <input formControlName="name" placeholder="Enter Name" class="form-control form-control-lg" type="text"
+                *ngIf="pageType == 'register'" />
+            </fieldset>
+            <fieldset class="form-group">
+              <input formControlName="email" placeholder="Enter Email" class="form-control form-control-lg"
+                type="text" />
+            </fieldset>
+            <fieldset class="form-group">
+              <input formControlName="password" placeholder="Enter password" class="form-control form-control-lg"
+                type="password" />
+            </fieldset>
+            <button class="btn btn-lg btn-primary pull-xs-right" [disabled]="!authForm.valid" type="submit">
+              {{ pageTitle }}
+            </button>
+          </fieldset>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

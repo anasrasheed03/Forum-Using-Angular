@@ -1,0 +1,67 @@
+<nav class="navbar navbar-light">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">Hotel ToolKit Forum</a>
+
+    <!-- Show this for logged out users -->
+    <ul *appShowAuthed="false" class="nav navbar-nav pull-xs-right">
+
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/">
+          Home
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/login" routerLinkActive="active">
+          Sign in
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/register" routerLinkActive="active">
+          Sign up
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <mat-slide-toggle (change)="onAutoFetchChange($event)" [(ngModel)]="isAutoFetch">Auto Fetch</mat-slide-toggle>
+      </li>
+      
+    </ul>
+
+    <!-- Show this for logged in users -->
+    <ul *appShowAuthed="true" class="nav navbar-nav pull-xs-right">
+
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          Home
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/newpost" routerLinkActive="active">
+          <i class="ion-compose"></i>New Post
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/" routerLinkActive="active">
+          <img [src]="currentUser.image" *ngIf="currentUser.image" class="user-pic" />
+          {{ currentUser.username }}
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <mat-slide-toggle class="fetch-switch" (change)="onAutoFetchChange($event)" [(ngModel)]="isAutoFetch">Auto Fetch</mat-slide-toggle>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" routerLink="#" (click)="logout()" routerLinkActive="active">
+          <i class="ion-gear-a"></i>&nbsp;Logout
+        </a>
+      </li>
+
+    </ul>
+
+  </div>
+</nav>
